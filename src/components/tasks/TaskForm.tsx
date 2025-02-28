@@ -71,6 +71,7 @@ export const TaskForm = ({ task }: TaskFormProps) => {
 
   const onSubmit = (data: FormTask) => {
     if (isEditing && task) {
+      console.log("ISEDITING : ");
       updateTask(task.id, data);
       toast(
         <div className="flex items-center flex-row text-[#08553b]">
@@ -80,9 +81,7 @@ export const TaskForm = ({ task }: TaskFormProps) => {
       );
     } else {
       const newTask = {
-        ...data,
-        createdAt: new Date().toISOString(),
-        order: 0,
+        ...data
       };
       addTask(newTask);
       toast(
@@ -97,14 +96,14 @@ export const TaskForm = ({ task }: TaskFormProps) => {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button className="flex flex-row rounded shadow bg-primary cursor-pointer hover:shadow-xl transition-all">
+        <Button className="flex flex-row rounded shadow bg-primary cursor-pointer hover:shadow-xl transition-all hover:translate-0.5">
           {task !== null ? (
             <>
-              <Plus color="#FFFFFF" size={32} /> Edit Task
+              <Pencil className="mr-2 h-4 w-4" /> Edit Task
             </>
           ) : (
             <>
-              <Pencil className="mr-2 h-4 w-4" /> Add new Task
+              <Plus color="#FFFFFF" size={32} /> Add new Task
             </>
           )}
         </Button>
@@ -145,7 +144,6 @@ export const TaskForm = ({ task }: TaskFormProps) => {
               </p>
             )}
           </div>
-
           <div className="p-3">
             <Label
               className="my-3 text-sm text-[#161618] font-light"
@@ -193,13 +191,11 @@ export const TaskForm = ({ task }: TaskFormProps) => {
                 Cancel
               </Button>
             </DialogTrigger>
-            <DialogTrigger>
-              <Button
-                className="flex flex-row bg-primary cursor-pointer"
-                type="submit"
+            <DialogTrigger type="submit" className="flex flex-row justify-center text-white px-2 p-1 rounded shadow bg-primary cursor-pointer hover:shadow-xl transition-all hover:translate-0.5" >
+              <p
               >
                 {isEditing ? "Save modifications" : "Create Task"}
-              </Button>
+              </p>
             </DialogTrigger>
           </DialogFooter>
         </form>

@@ -1,8 +1,11 @@
 import { Task } from "@/types/task";
-import { BadgeCheck, EllipsisVertical } from "lucide-react";
+import { BadgeCheck } from "lucide-react";
 import { TaskDetails } from "./TaskDetails";
 import { useTaskStore } from "@/store/useTaskStore";
 import { toast } from "sonner";
+import { useSortable } from "@dnd-kit/sortable";
+import { CSS } from "@dnd-kit/utilities";
+import { format } from "date-fns";
 
 interface TaskItemProps {
   task: Task;
@@ -10,6 +13,27 @@ interface TaskItemProps {
 
 export const TaskItem = ({ task }: TaskItemProps) => {
   const taskDelete = useTaskStore((state) => state.deleteTask);
+  const today = new Date();
+  const sevenDaysFromNow = new Date(today);
+  sevenDaysFromNow.setDate(today.getDate() + 7);
+
+  const dueDate = new Date(task.dueDate);
+  const isDueInNext7Days = dueDate >= today && dueDate <= sevenDaysFromNow;
+
+  const {
+    attributes,
+    listeners,
+    setNodeRef,
+    transform,
+    transition,
+    isDragging,
+  } = useSortable({ id: task.id });
+
+  const style = {
+    transform: CSS.Transform.toString(transform),
+    transition,
+    opacity: isDragging ? 0.5 : 1,
+  };
 
   const handleDelete = (taskId: string) => {
     taskDelete(taskId);
@@ -22,7 +46,13 @@ export const TaskItem = ({ task }: TaskItemProps) => {
   };
 
   return (
-    <div className="relative w-full p-4 my-2 rounded-lg bg-white shadow-sm hover:translate-1 hover:shadow-md transition-all duration-200 ease-in-out cursor-grab border border-gray-100">
+    <div
+      ref={setNodeRef}
+      style={style}
+      {...attributes}
+      {...listeners}
+      className="relative w-full p-4 my-2 rounded-lg bg-white shadow-sm hover:translate-1 hover:shadow-md transition-all duration-200 ease-in-out cursor-grab border border-gray-100"
+    >
       <div className="flex items-center justify-between gap-4">
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-3 mb-2">
@@ -52,16 +82,16 @@ export const TaskItem = ({ task }: TaskItemProps) => {
             <p className="text-sm text-gray-600 line-clamp-2">
               {task.description}
             </p>
-            <div className="flex flex-row-reverse items-center w-full ">
+            <div className="flex flex-row-reverse items-center w-full justify-between">
               <TaskDetails task={task} handleDelete={handleDelete} />
+              {isDueInNext7Days && (
+              <p className="text-xs text-red-500 mt-1 ">
+                ⚠️ {format(dueDate, "dd/MM/yyyy")}
+              </p>
+              )}
             </div>
           </div>
         </div>
-      </div>
-      <div className="absolute top-4 right-4">
-        <button className="p-1 text-gray-400 hover:text-gray-600 transition-colors cursor-pointer">
-          <EllipsisVertical size={18} />
-        </button>
       </div>
     </div>
   );
