@@ -46,6 +46,7 @@ interface TaskStore extends BoardState {
     endIndex: number
   ) => void;
   fetchTasks: () => Promise<void>;
+  getAllTasks: () => Task[]; // New method to get all tasks
 }
 
 const initialState: BoardState = {
@@ -71,7 +72,7 @@ const initialState: BoardState = {
 
 export const useTaskStore = create<TaskStore>()(
   persist(
-    (set) => ({
+    (set, get) => ({
       ...initialState,
 
       addTask: (taskData) =>
@@ -107,7 +108,6 @@ export const useTaskStore = create<TaskStore>()(
           );
 
           if (updates.status && updates.status !== columnKey) {
-            console.log("4");
             const taskToMove = updatedTasks.find((t) => t.id === id)!;
             if (!taskToMove) return state;
             updateTaskService(columnKey, taskToMove);
@@ -167,13 +167,29 @@ export const useTaskStore = create<TaskStore>()(
         set((state) => {
           const sourceTasks = [...state.columns[source].tasks];
           const taskIndex = sourceTasks.findIndex((t) => t.id === taskId);
+          if (taskIndex === -1) return state; // Safety check
+
+          // Remove the task from the source column
           const [task] = sourceTasks.splice(taskIndex, 1);
           const updatedTask = { ...task, status: destination, order: newIndex };
 
-          const destinationTasks = [...state.columns[destination].tasks];
+          // Reindex remaining tasks in the source column
+          const updatedSourceTasks = sourceTasks.map((t, index) => ({
+            ...t,
+            order: index,
+          }));
 
+          // Insert the task into the destination column
+          const destinationTasks = [...state.columns[destination].tasks];
           destinationTasks.splice(newIndex, 0, updatedTask);
 
+          // Reindex all tasks in the destination column
+          const updatedDestinationTasks = destinationTasks.map((t, index) => ({
+            ...t,
+            order: index,
+          }));
+
+          // Update the task in the service (if necessary)
           updateTaskService(taskId, updatedTask);
 
           return {
@@ -181,38 +197,37 @@ export const useTaskStore = create<TaskStore>()(
               ...state.columns,
               [source]: {
                 ...state.columns[source],
-                tasks: sourceTasks,
+                tasks: updatedSourceTasks,
               },
               [destination]: {
                 ...state.columns[destination],
-                tasks: destinationTasks,
+                tasks: updatedDestinationTasks,
               },
             },
           };
         }),
 
-        reorderTasks: (status, startIndex, endIndex) =>
-          set((state) => {
-            const newTasks = [...state.columns[status].tasks];
-            const [removed] = newTasks.splice(startIndex, 1);
-            newTasks.splice(endIndex, 0, removed);
+      reorderTasks: (status, startIndex, endIndex) =>
+        set((state) => {
+          const newTasks = [...state.columns[status].tasks];
+          const [removed] = newTasks.splice(startIndex, 1);
+          newTasks.splice(endIndex, 0, removed);
 
-            newTasks.forEach((task , index) => {
-              task.order = index;
-              updateTaskService(task.id, task);
-              console.log(task)
-            });
+          newTasks.forEach((task, index) => {
+            task.order = index;
+            updateTaskService(task.id, task);
+          });
 
-            return {
-              columns: {
-                ...state.columns,
-                [status]: {
-                  ...state.columns[status],
-                  tasks: newTasks,
-                },
+          return {
+            columns: {
+              ...state.columns,
+              [status]: {
+                ...state.columns[status],
+                tasks: newTasks,
               },
-            };
-          }),
+            },
+          };
+        }),
 
       fetchTasks: async () => {
         const tasks = await fetchTasksService();
@@ -227,6 +242,12 @@ export const useTaskStore = create<TaskStore>()(
         });
 
         set({ columns });
+      },
+
+      // New method to get all tasks from all columns
+      getAllTasks: () => {
+        const state = get();
+        return Object.values(state.columns).flatMap((column) => column.tasks);
       },
     }),
     {

@@ -4,7 +4,6 @@ import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import "./index.css";
 import App from "./App.tsx";
 import TaskBoardPage from "./pages/TaskBoardPage.tsx";
-import TaskFormPage from "./pages/TaskFormPage.tsx";
 import DashBoardPage from "./pages/DashBoard.tsx";
 import { AppSidebar } from "@/components/common/SideBar";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
@@ -18,10 +17,6 @@ const router = createBrowserRouter([
       {
         path: "",
         element: <TaskBoardPage />,
-      },
-      {
-        path: "create",
-        element: <TaskFormPage />,
       },
     ],
   },

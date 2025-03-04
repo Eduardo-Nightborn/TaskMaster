@@ -1,5 +1,5 @@
 // TaskList.tsx
-import { Task } from "@/types/task";
+import { Task, TaskStatus } from "@/types/task";
 import { TaskItem } from "./TaskItem";
 import {
   useSortable,
@@ -12,10 +12,14 @@ interface TaskListProps {
   taskList: Task[];
   bgColor: string;
   icon: any;
+  status: TaskStatus;
 }
 
-export const TaskList = ({ taskList, title, bgColor, icon }: TaskListProps) => {
-  const { setNodeRef, attributes, listeners } = useSortable({ id: title });
+export const TaskList = ({ taskList, title, status, bgColor, icon }: TaskListProps) => {
+  const { setNodeRef, attributes, listeners } = useSortable({ id: status });
+
+  // Trier les tâches par order
+  const sortedTasks = [...taskList].sort((a, b) => a.order - b.order);
 
   return (
     <div
@@ -34,11 +38,11 @@ export const TaskList = ({ taskList, title, bgColor, icon }: TaskListProps) => {
         </div>
       </div>
       <SortableContext
-        items={taskList.map((task) => task.id)}
+        items={sortedTasks.map((task) => task.id)}
         strategy={verticalListSortingStrategy}
       >
         <div className="flex flex-col h-full">
-          {taskList.map((task) => (
+          {sortedTasks.map((task) => (
             <TaskItem key={task.id} task={task} />
           ))}
         </div>

@@ -1,4 +1,4 @@
-import { LayoutGrid, BriefcaseBusiness } from "lucide-react";
+import {  BriefcaseBusiness, ListTodo } from "lucide-react";
 
 import {
   Sidebar,
@@ -16,7 +16,7 @@ const items = [
   {
     title: "Task Board",
     url: "/",
-    icon: LayoutGrid,
+    icon: ListTodo,
   },
   {
     title: "DashBoard",

@@ -19,11 +19,9 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
-
-import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
-import { Calendar, AlertCircle, CheckCircle, Trash2 } from "lucide-react";
+import { Calendar, AlertCircle, CheckCircle, Trash2  } from "lucide-react";
 import { Task } from "@/types/task";
 import { format } from "date-fns";
 import { TaskForm } from "./TaskForm";
@@ -37,9 +35,9 @@ export const TaskDetails = ({ task, handleDelete }: TaskDetailsProps) => {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <p className="text-xs text-gray-400 cursor-pointer hover:underline mt-1">
-          View Task Details
-        </p>
+        <div className=" flex flex-row items-center cursor-pointer hover:underline mt-1">
+          <p className="text-xs text-gray-400 mx-2">View Task Details</p>
+        </div>
       </DialogTrigger>
 
       <DialogContent>
