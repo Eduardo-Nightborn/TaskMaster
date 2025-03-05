@@ -72,7 +72,4 @@ This will start the application in development mode. Open [http://localhost:5173
 4. Push to the branch (`git push origin feature/AmazingFeature`)
 5. Open a Pull Request
 
-## License
-
-This project is licensed under the MIT License - see the LICENSE file for details.
 
