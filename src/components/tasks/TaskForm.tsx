@@ -99,27 +99,27 @@ export const TaskForm = ({ task }: TaskFormProps) => {
         <Button className="flex flex-row rounded shadow bg-primary cursor-pointer hover:shadow-xl transition-all hover:translate-0.5">
           {task !== null ? (
             <>
-              <Pencil className="mr-2 h-4 w-4" /> Edit Task
+              <Pencil className="mr-2 h-4 w-4 dark:text-[#3863C6]" /> Edit Task
             </>
           ) : (
             <>
-              <Plus color="#FFFFFF" size={32} /> Add new Task
+              <Plus className="mr-2 h-4 w-4 dark:text-[#3863C6]" size={32} /> Add new Task
             </>
           )}
         </Button>
       </DialogTrigger>
-      <DialogContent>
+      <DialogContent className="dark:bg-black">
         <DialogHeader>
-          <DialogTitle>
+          <DialogTitle className="dark:text-white">
             🗒️ {isEditing ? "Edit Task" : "Create New Task"}
           </DialogTitle>
-          <Separator />
+          <Separator className="dark:bg-gray-700" />
         </DialogHeader>
 
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           <div className="p-3">
             <Label
-              className="my-3 text-sm text-[#161618] font-light"
+              className="my-3 text-sm text-[#161618] dark:text-white font-light"
               htmlFor="title"
             >
               Title
@@ -134,7 +134,7 @@ export const TaskForm = ({ task }: TaskFormProps) => {
                   id="title"
                   required
                   placeholder="Title of your task..."
-                  className="my-2"
+                  className="my-2 dark:bg-black dark:text-white"
                 />
               )}
             />
@@ -146,7 +146,7 @@ export const TaskForm = ({ task }: TaskFormProps) => {
           </div>
           <div className="p-3">
             <Label
-              className="my-3 text-sm text-[#161618] font-light"
+              className="my-3 text-sm text-[#161618] dark:text-white font-light"
               htmlFor="description"
             >
               Description
@@ -160,7 +160,7 @@ export const TaskForm = ({ task }: TaskFormProps) => {
                   id="description"
                   required
                   placeholder="Describe your task..."
-                  className="my-2 resize-none"
+                  className="my-2 resize-none dark:bg-black dark:text-white"
                 />
               )}
             />
@@ -191,7 +191,8 @@ export const TaskForm = ({ task }: TaskFormProps) => {
                 Cancel
               </Button>
             </DialogTrigger>
-            <DialogTrigger type="submit" className="flex flex-row justify-center text-white px-2 p-1 rounded shadow bg-primary cursor-pointer hover:shadow-xl transition-all hover:translate-0.5" >
+            <DialogTrigger type="submit" 
+            className="flex flex-row justify-center text-white px-2 p-1 rounded shadow bg-primary cursor-pointer hover:shadow-xl transition-all hover:translate-0.5 dark:text-black" >
               <p
               >
                 {isEditing ? "Save modifications" : "Create Task"}

@@ -113,7 +113,7 @@ function TaskBoardPage() {
             taskList={taskToDo}
             title="To Do"
             bgColor="bg-gray-50"
-            icon={<ListPlus color="#4B5563" size={24} />}
+            icon={<ListPlus className=" text-[#4B5563] dark:text-gray-300" size={24} />}
             status="Todo"
           />
           <TaskList

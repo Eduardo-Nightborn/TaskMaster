@@ -32,7 +32,7 @@ export function DatePicker({
       render={({ field }) => (
         <div className="flex flex-col px-3">
           <Label
-            className="mb-2 text-sm text-[#161618] font-light"
+            className="mb-2 text-sm text-[#161618] font-light dark:text-white"
             htmlFor={name}
           >
             {label}

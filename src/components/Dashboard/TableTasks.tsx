@@ -65,10 +65,10 @@ export const TableTask = ({ tasksProps }: TableTasksProps) => {
   };
 
   return (
-    <div className="flex flex-col border rounded-lg w-full h-[calc(100vh-16rem)]  lg:h-[calc(100vh-31rem)] p-2 sm:p-4">
+    <div className="flex flex-col border rounded-lg w-full h-[calc(100vh-16rem)] lg:h-[calc(100vh-31rem)] p-2 sm:p-4 dark:border-gray-800 dark:bg-gray-800">
       <div className="flex items-center gap-2 mb-4">
-        <List className="text-blue-600 w-5 h-5 sm:w-6 sm:h-6" />
-        <h3 className="font-semibold text-gray-800 text-sm sm:text-base">
+        <List className="text-blue-600 dark:text-blue-400 w-5 h-5 sm:w-6 sm:h-6" />
+        <h3 className="font-semibold text-gray-800 dark:text-gray-200 text-sm sm:text-base">
           All Tasks
         </h3>
       </div>
@@ -86,10 +86,12 @@ export const TableTask = ({ tasksProps }: TableTasksProps) => {
           isStatus={true}
         />
         <div className="flex flex-row w-full items-center justify-center">
-          <div className="flex flex-row items-center border rounded-lg w-[220px] md:w-[260px] lg:w-[220px]">
-            <Search className="mx-2 h-4 w-4" color="#161618" />
+          <div className="flex flex-row items-center border rounded-lg w-[220px] md:w-[260px] lg:w-[220px] dark:border-gray-700">
+            <Search
+              className="mx-2 h-4 w-4 text-5-[#161618]  dark:text-white"
+            />
             <Input
-              className="border-none outline-none shadow-none focus-visible:ring-0 h-9 py-1 text-sm sm:text-base"
+              className="border-none outline-none shadow-none focus-visible:ring-0 h-9 py-1 text-sm sm:text-base dark:bg-transparent dark:text-gray-200"
               placeholder="Search here"
               value={filterText}
               onChange={(e) => setFilterText(e.target.value)}
@@ -100,51 +102,49 @@ export const TableTask = ({ tasksProps }: TableTasksProps) => {
       <ScrollArea className="h-full p-2 sm:p-1 scroll-smooth overflow-hidden">
         <div className="p-2 md:p-4">
           <Table>
-            <TableCaption className="caption-bottom">
+            <TableCaption className="caption-bottom dark:text-gray-400">
               A list of all your tasks
             </TableCaption>
             <TableHeader>
-              <TableRow>
-                <TableHead className="w-full sm:w-1/4">Task</TableHead>
-                <TableHead className="hidden sm:table-cell w-1/5">
+              <TableRow className="dark:border-gray-800">
+                <TableHead className="w-full sm:w-1/4 dark:text-gray-200">Task</TableHead>
+                <TableHead className="hidden sm:table-cell w-1/5 dark:text-gray-200">
                   Due Date
                 </TableHead>
-                <TableHead className="hidden sm:table-cell w-1/5">
+                <TableHead className="hidden sm:table-cell w-1/5 dark:text-gray-200">
                   Status
                 </TableHead>
-                <TableHead className="hidden sm:table-cell">Priority</TableHead>
-                <TableHead className="w-1/4 sm:w-auto">Actions</TableHead>
+                <TableHead className="hidden sm:table-cell dark:text-gray-200">Priority</TableHead>
+                <TableHead className="w-1/4 sm:w-auto dark:text-gray-200">Actions</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               {tasks.map((task, index) => (
-                <TableRow key={index}>
-                  <TableCell className="font-medium">{task.title}</TableCell>
-                  <TableCell className="hidden sm:table-cell">
+                <TableRow key={index} className="dark:border-gray-800">
+                  <TableCell className="font-medium dark:text-gray-200">{task.title}</TableCell>
+                  <TableCell className="hidden sm:table-cell dark:text-gray-300">
                     {format(task.dueDate, "dd/MM/yyyy")}
                   </TableCell>
                   <TableCell className="hidden sm:table-cell">
                     <Badge
-                      className={`capitalize ${
-                        task.status === "Done"
-                          ? "bg-green-100 text-green-800"
+                      className={`capitalize ${task.status === "Done"
+                          ? "bg-green-100 text-green-800 dark:bg-green-500/20 dark:text-green-500"
                           : task.status === "InProgress"
-                          ? "bg-blue-100 text-blue-800"
-                          : "bg-gray-100 text-gray-800"
-                      }`}
+                            ? "bg-blue-100 text-blue-800 dark:bg-blue-500/20 dark:text-blue-300"
+                            : "bg-gray-100 text-gray-800 dark:bg-gray-300 dark:text-gray-800"
+                        }`}
                     >
                       {task.status}
                     </Badge>
                   </TableCell>
                   <TableCell className="hidden sm:table-cell">
                     <Badge
-                      className={`capitalize ${
-                        task.priority === "High"
-                          ? "bg-red-100 text-red-800"
+                      className={`capitalize ${task.priority === "High"
+                          ? "bg-red-100 text-red-800 dark:bg-red-500/20 dark:text-red-500"
                           : task.priority === "Medium"
-                          ? "bg-yellow-100 text-yellow-800"
-                          : "bg-green-100 text-green-800"
-                      }`}
+                            ? "bg-yellow-100 text-yellow-800 dark:bg-yellow-500/20 dark:text-yellow-500"
+                            : "bg-green-100 text-green-800 dark:bg-green-500/20 dark:text-green-500"
+                        }`}
                     >
                       {task.priority}
                     </Badge>

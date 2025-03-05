@@ -25,7 +25,7 @@ export const PrioritySelector = ({
 }: PrioritySelectorProps) => {
   return (
     <div className="p-3">
-      <Label className="mb-2 text-sm text-[#161618] font-light" htmlFor={name}>
+      <Label className="mb-3 text-sm text-[#161618] font-light dark:text-white" htmlFor={name}>
         {label}
       </Label>
       <Controller

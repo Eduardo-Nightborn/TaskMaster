@@ -42,37 +42,37 @@ export const TaskDetails = ({ task, handleDelete }: TaskDetailsProps) => {
 
       <DialogContent>
         <DialogHeader>
-          <DialogTitle className="text-lg font-semibold text-gray-900">
+          <DialogTitle className="text-lg font-semibold text-gray-900 dark:text-gray-100">
             🗒️ Task Details
           </DialogTitle>
         </DialogHeader>
         <Separator className="my-1" />
 
         <div>
-          <h2 className="text-xl font-semibold text-gray-900">{task.title}</h2>
-          <DialogDescription className="mt-2 text-gray-600">
+          <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100">{task.title}</h2>
+          <DialogDescription className="mt-2 text-gray-600 dark:text-gray-400">
             {task.description}
           </DialogDescription>
         </div>
 
         <div className="grid grid-cols-2 sm:grid-cols-2 gap-4">
           <div className="flex items-center">
-            <Calendar className="mr-2 h-4 w-4 text-gray-500" />
-            <span className="font-medium text-gray-700">Created At</span>
+            <Calendar className="mr-2 h-4 w-4 text-gray-500 dark:text-gray-400" />
+            <span className="font-medium text-gray-700 dark:text-gray-300">Created At</span>
           </div>
-          <div className="text-gray-600">
+          <div className="text-gray-600 dark:text-gray-400">
             {format(task.createdAt, "dd/MM/yyyy")}
           </div>
           <div className="flex items-center">
-            <Calendar className="mr-2 h-4 w-4 text-gray-500" />
-            <span className="font-medium text-gray-700">Due Date</span>
+            <Calendar className="mr-2 h-4 w-4 text-gray-500 dark:text-gray-400" />
+            <span className="font-medium text-gray-700 dark:text-gray-300">Due Date</span>
           </div>
-          <div className="text-gray-600">
+          <div className="text-gray-600 dark:text-gray-400">
             {format(task.dueDate, "dd/MM/yyyy")}
           </div>
           <div className="flex items-center">
-            <AlertCircle className="mr-2 h-4 w-4 text-gray-500" />
-            <span className="font-medium text-gray-700">Priority</span>
+            <AlertCircle className="mr-2 h-4 w-4 text-gray-500 dark:text-gray-400" />
+            <span className="font-medium text-gray-700 dark:text-gray-300">Priority</span>
           </div>
           <div>
             <Badge
@@ -89,8 +89,8 @@ export const TaskDetails = ({ task, handleDelete }: TaskDetailsProps) => {
           </div>
           {/* Status */}
           <div className="flex items-center">
-            <CheckCircle className="mr-2 h-4 w-4 text-gray-500" />
-            <span className="font-medium text-gray-700">Status</span>
+            <CheckCircle className="mr-2 h-4 w-4 text-gray-500 dark:text-gray-400" />
+            <span className="font-medium text-gray-700 dark:text-gray-300">Status</span>
           </div>
           <div>
             <Badge
@@ -128,7 +128,7 @@ export const TaskDetails = ({ task, handleDelete }: TaskDetailsProps) => {
                 </AlertDialogCancel>
                 <AlertDialogAction
                   onClick={() => handleDelete(task.id)}
-                  className="bg-red-500 hover:bg-red-400 cursor-pointer hover:translate-[1px] hover:shadow-md"
+                  className="bg-red-500 hover:bg-red-400 cursor-pointer hover:translate-[1px] hover:shadow-md dark:bg-red-500 dark:hover:bg-red-400 dark:text-white"
                 >
                   <Trash2 className="mr-2 h-4 w-4" /> Delete Task
                 </AlertDialogAction>

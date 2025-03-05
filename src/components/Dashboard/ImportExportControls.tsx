@@ -174,26 +174,26 @@ export const ImportExportControls = () => {
 
       {importing && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center">
-          <div className="bg-white p-6 rounded-lg w-96">
-            <h3 className="text-lg font-semibold mb-4">Importing Tasks</h3>
+          <div className="bg-white dark:bg-gray-800 p-6 rounded-lg w-96">
+            <h3 className="text-lg font-semibold mb-4 dark:text-white">Importing Tasks</h3>
             <Progress value={progress} className="mb-4" />
-            <p className="text-sm text-gray-600">Please wait while your tasks are being imported...</p>
+            <p className="text-sm text-gray-600 dark:text-gray-300">Please wait while your tasks are being imported...</p>
           </div>
         </div>
       )}
 
       <Dialog open={showDuplicateDialog} onOpenChange={setShowDuplicateDialog}>
-        <DialogContent>
+        <DialogContent className="dark:bg-gray-800">
           <DialogHeader>
-            <DialogTitle>Duplicate Tasks Found</DialogTitle>
-            <DialogDescription>
+            <DialogTitle className="dark:text-white">Duplicate Tasks Found</DialogTitle>
+            <DialogDescription className="dark:text-gray-300">
               {importResult && (
                 <>
                   Found {importResult.duplicates.length} duplicate tasks. How would you like to proceed?
                   <div className="mt-4 space-y-2">
                     <Button
                       onClick={() => handleDuplicateResolution(false)}
-                      className="w-full"
+                      className="w-full dark:bg-gray-700 dark:text-white dark:hover:bg-gray-600"
                       variant="outline"
                     >
                       Skip duplicates ({importResult.newTasks.length} new tasks only)

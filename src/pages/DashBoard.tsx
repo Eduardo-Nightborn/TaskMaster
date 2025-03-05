@@ -38,7 +38,7 @@ function DashBoardPage() {
       title: "Total Tasks",
       statsNumber: totalTasks,
       icon: (
-        <div className="p-1.5 bg-[#FEF9F1] rounded-lg">
+        <div className="p-1.5 bg-[#FEF9F1] dark:bg-gray-700 rounded-lg">
           <BriefcaseBusiness color="#E7854D" />
         </div>
       ),
@@ -47,7 +47,7 @@ function DashBoardPage() {
       title: "Tasks To Do",
       statsNumber: taskToDo.length,
       icon: (
-        <div className="p-2 bg-[#FBF3F4] rounded-lg">
+        <div className="p-2 bg-[#FBF3F4] dark:bg-gray-700 rounded-lg">
           <ListPlus color="#c75c72" />
         </div>
       ),
