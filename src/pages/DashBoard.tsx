@@ -12,6 +12,7 @@ import { StatCard } from "@/components/Dashboard/StatCard";
 import { DoughnutChart } from "@/components/Dashboard/Chart";
 import { TableTask } from "@/components/Dashboard/TableTasks";
 import { LineChartCustom } from "@/components/Dashboard/LineChart";
+import { ImportExportControls } from "@/components/Dashboard/ImportExportControls";
 
 // Register Chart.js components and plugins
 
@@ -131,10 +132,7 @@ function DashBoardPage() {
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-5 p-4">
           <p className="text-xl">Analytics Overview of your tasks 📊</p>
           <div className="w-full sm:w-auto">
-            <Button className="w-full sm:w-auto flex items-center gap-2 rounded shadow bg-primary cursor-pointer hover:shadow-xl transition-all hover:translate-0.5">
-              <Upload />
-              <p>Export</p>
-            </Button>
+          <ImportExportControls />
           </div>
         </div>
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 my-4">
