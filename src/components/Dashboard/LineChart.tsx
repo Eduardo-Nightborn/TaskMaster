@@ -43,21 +43,19 @@ export const LineChartCustom = () => {
       });
     });
 
-    // Start observing
     observer.observe(document.documentElement, {
       attributes: true,
       attributeFilter: ['class'],
     });
 
-    // Cleanup
     return () => observer.disconnect();
   }, []);
 
-  // Function to group tasks by date
+
   const groupTasksByDate = (tasks: Task[]) => {
     const grouped = tasks.reduce(
       (acc: { [key: string]: { done: number; active: number } }, task) => {
-        const date = task.createdAt.split("T")[0]; // Get only the date without time
+        const date = task.createdAt.split("T")[0]; 
         if (!acc[date]) {
           acc[date] = { done: 0, active: 0 };
         }
@@ -73,7 +71,6 @@ export const LineChartCustom = () => {
       {}
     );
 
-    // Sort dates
     return Object.entries(grouped).sort(([dateA], [dateB]) =>
       dateA.localeCompare(dateB)
     );
@@ -86,7 +83,7 @@ export const LineChartCustom = () => {
 
   const options = {
     responsive: true,
-    maintainAspectRatio: false,  // This allows the chart to fill its container
+    maintainAspectRatio: false,  
     plugins: {
       legend: {
         position: 'top' as const,

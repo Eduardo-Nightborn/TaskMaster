@@ -11,8 +11,8 @@ import {
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
 import { useEffect } from 'react'
-import { useThemeStore } from '../../store/theme-store'
-import { ThemeToggle } from '../ThemeToggle'
+import { useThemeStore } from '../../store/useThemestore'
+import { ThemeToggle } from './ThemeToggle'
 
 
 // Menu items.

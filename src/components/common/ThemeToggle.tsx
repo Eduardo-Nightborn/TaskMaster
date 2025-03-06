@@ -1,6 +1,6 @@
 import { Moon, Sun } from 'lucide-react'
 import { Switch } from "@/components/ui/switch"
-import { useThemeStore } from '../store/theme-store'
+import { useThemeStore } from '../../store/useThemestore'
 
 export function ThemeToggle() {
     const { theme, toggleTheme } = useThemeStore()

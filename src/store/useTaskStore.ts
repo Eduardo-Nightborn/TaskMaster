@@ -7,6 +7,7 @@ import {
   fetchTasksService,
   updateTaskService,
 } from "@/services/TaskServices";
+import { toast } from "sonner";
 
 // Update BoardState to use tasks directly instead of taskIds
 interface BoardState {
@@ -46,7 +47,11 @@ interface TaskStore extends BoardState {
     endIndex: number
   ) => void;
   fetchTasks: () => Promise<void>;
-  getAllTasks: () => Task[]; // New method to get all tasks
+  getAllTasks: () => Task[]; 
+  addDependency: (taskId: string, dependencyId: string) => void;
+  removeDependency: (taskId: string, dependencyId: string) => void;
+  getDependencies: (taskId: string) => Task[];
+  getDependents: (taskId: string) => Task[]; 
 }
 
 const initialState: BoardState = {
@@ -167,11 +172,27 @@ export const useTaskStore = create<TaskStore>()(
         set((state) => {
           const sourceTasks = [...state.columns[source].tasks];
           const taskIndex = sourceTasks.findIndex((t) => t.id === taskId);
-          if (taskIndex === -1) return state; // Safety check
+          if (taskIndex === -1) return state;
+
+          const task = sourceTasks[taskIndex];
+          
+          // Check if all dependencies are completed before moving to Done
+          if (destination === "Done" && task.dependencies?.length > 0) {
+            const uncompletedDependencies = task.dependencies.filter(dep => 
+              dep.status !== "Done"
+            );
+
+            if (uncompletedDependencies.length > 0) {
+              toast.error("Cannot complete task", {
+                description: "All dependent tasks must be completed first"
+              });
+              return state;
+            }
+          }
 
           // Remove the task from the source column
-          const [task] = sourceTasks.splice(taskIndex, 1);
-          const updatedTask = { ...task, status: destination, order: newIndex };
+          const [removedTask] = sourceTasks.splice(taskIndex, 1);
+          const updatedTask = { ...removedTask, status: destination, order: newIndex };
 
           // Reindex remaining tasks in the source column
           const updatedSourceTasks = sourceTasks.map((t, index) => ({
@@ -248,6 +269,82 @@ export const useTaskStore = create<TaskStore>()(
       getAllTasks: () => {
         const state = get();
         return Object.values(state.columns).flatMap((column) => column.tasks);
+      },
+
+      addDependency: (taskId, dependencyId) =>
+        set((state) => {
+          const columnKey = Object.keys(state.columns).find((key) =>
+            state.columns[key as TaskStatus].tasks.some((t) => t.id === taskId)
+          ) as TaskStatus;
+
+          if (!columnKey) return state;
+
+          const dependencyTask = Object.values(state.columns)
+            .flatMap((column) => column.tasks)
+            .find((t) => t.id === dependencyId);
+
+          if (!dependencyTask) return state;
+
+          return {
+            columns: {
+              ...state.columns,
+              [columnKey]: {
+                ...state.columns[columnKey],
+                tasks: state.columns[columnKey].tasks.map((task) =>
+                  task.id === taskId
+                    ? {
+                        ...task,
+                        dependencies: [...(task.dependencies || []), dependencyTask],
+                      }
+                    : task
+                ),
+              },
+            },
+          };
+        }),
+
+      removeDependency: (taskId, dependencyId) =>
+        set((state) => {
+          const columnKey = Object.keys(state.columns).find((key) =>
+            state.columns[key as TaskStatus].tasks.some((t) => t.id === taskId)
+          ) as TaskStatus;
+
+          if (!columnKey) return state;
+
+          return {
+            columns: {
+              ...state.columns,
+              [columnKey]: {
+                ...state.columns[columnKey],
+                tasks: state.columns[columnKey].tasks.map((task) =>
+                  task.id === taskId
+                    ? {
+                        ...task,
+                        dependencies: (task.dependencies || []).filter(
+                          (dep) => dep.id !== dependencyId
+                        ),
+                      }
+                    : task
+                ),
+              },
+            },
+          };
+        }),
+
+      getDependencies: (taskId) => {
+        const state = get();
+        const task = Object.values(state.columns)
+          .flatMap((column) => column.tasks)
+          .find((t) => t.id === taskId);
+
+        return task?.dependencies || [];
+      },
+
+      getDependents: (taskId) => {
+        const state = get();
+        return Object.values(state.columns)
+          .flatMap((column) => column.tasks)
+          .filter((task) => task.dependencies?.some(dep => dep.id === taskId));
       },
     }),
     {

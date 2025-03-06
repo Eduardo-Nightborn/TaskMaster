@@ -102,11 +102,11 @@ export const TableTask = ({ tasksProps }: TableTasksProps) => {
       <ScrollArea className="h-full p-2 sm:p-1 scroll-smooth overflow-hidden">
         <div className="p-2 md:p-4">
           <Table>
-            <TableCaption className="caption-bottom dark:text-gray-400">
+            <TableCaption className="caption-bottom dark:text-gray-400 ">
               A list of all your tasks
             </TableCaption>
             <TableHeader>
-              <TableRow className="dark:border-gray-800">
+              <TableRow className="dark:border-gray-700">
                 <TableHead className="w-full sm:w-1/4 dark:text-gray-200">Task</TableHead>
                 <TableHead className="hidden sm:table-cell w-1/5 dark:text-gray-200">
                   Due Date
@@ -120,7 +120,7 @@ export const TableTask = ({ tasksProps }: TableTasksProps) => {
             </TableHeader>
             <TableBody>
               {tasks.map((task, index) => (
-                <TableRow key={index} className="dark:border-gray-800">
+                <TableRow key={index} className="dark:border-gray-700">
                   <TableCell className="font-medium dark:text-gray-200">{task.title}</TableCell>
                   <TableCell className="hidden sm:table-cell dark:text-gray-300">
                     {format(task.dueDate, "dd/MM/yyyy")}

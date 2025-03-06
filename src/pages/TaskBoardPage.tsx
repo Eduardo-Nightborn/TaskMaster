@@ -3,6 +3,8 @@ import { TaskList } from "@/components/tasks/TaskList";
 import { useTaskStore } from "@/store/useTaskStore";
 import { useEffect, useCallback } from "react";
 import { ListPlus, CircleDashed, ListChecks, ListTodo } from "lucide-react";
+import { toast } from "sonner";
+
 
 import {
   DndContext,
@@ -12,10 +14,9 @@ import {
   useSensors,
   closestCenter,
 } from "@dnd-kit/core";
-import { TaskStatus } from "../types/task";
+import { Task, TaskStatus } from "../types/task";
 
 function TaskBoardPage() {
-  console.log("TaskList rendu");
 
   const fetchTasks = useCallback(
     useTaskStore((state) => state.fetchTasks),
@@ -77,6 +78,29 @@ function TaskBoardPage() {
     } else {
       // Déplacement entre colonnes
       const sourceIndex = sourceTasks.findIndex((t) => t.id === activeId);
+      const activeTask = sourceTasks[sourceIndex];
+      // Vérification des dépendances
+      if (activeTask.dependencies?.length > 0 && destColumn === "Done") {
+        const areDependenciesPending = activeTask.dependencies.some((depId) => {
+          const dependentTasks = Object.values(columns)
+          .flatMap((col) => col.tasks)
+          .filter((task) => task.id === depId);
+            dependentTasks.forEach((task)=>{
+              if(task.status !== "Done"){
+                return true;
+              }
+              
+            })
+          return false;
+        });
+        if (areDependenciesPending) {
+          toast.error("Cannot complete task", {
+            description: "All dependent tasks must be completed first",
+          });
+          return;
+        }
+      }
+      
       const destIndex =
         overId === destColumn
           ? destTasks.length
@@ -113,7 +137,12 @@ function TaskBoardPage() {
             taskList={taskToDo}
             title="To Do"
             bgColor="bg-gray-50"
-            icon={<ListPlus className=" text-[#4B5563] dark:text-gray-300" size={24} />}
+            icon={
+              <ListPlus
+                className=" text-[#4B5563] dark:text-gray-300"
+                size={24}
+              />
+            }
             status="Todo"
           />
           <TaskList

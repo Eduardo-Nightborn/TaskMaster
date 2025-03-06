@@ -121,6 +121,7 @@ export const ImportExportControls = () => {
         status: task.status,
         priority: task.priority,
         dueDate: task.dueDate,
+        dependencies: task.dependencies
       });
       setProgress(((i + 1) / total) * 100);
     }

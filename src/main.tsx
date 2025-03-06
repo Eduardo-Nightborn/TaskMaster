@@ -33,7 +33,7 @@ createRoot(document.getElementById("root")!).render(
         <AppSidebar />
         <SidebarTrigger className=" ml-1 cursor-pointer" />
         <RouterProvider router={router} />
-        <Toaster/>
+        <Toaster richColors/>
       </>
     </SidebarProvider>
   </StrictMode>

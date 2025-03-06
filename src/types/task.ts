@@ -11,6 +11,7 @@ export interface Task {
   dueDate: string; // ISO date string
   createdAt: string; // ISO date string
   order: number; // For positioning within a column
+  dependencies: string[]; // Array of task IDs that this task depends on
 }
 
 export interface Column {
