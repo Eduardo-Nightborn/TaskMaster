@@ -35,7 +35,7 @@ export const DoughnutChart = ({
         </div>
 
         <div className="flex flex-col gap-3 sm:gap-4 w-full">
-          {/* To do Legend */}
+
           <div className="flex items-center justify-between p-2.5 sm:p-3 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
             <div className="flex items-center gap-2 sm:gap-3">
               <div className="h-2.5 w-2.5 sm:h-3 sm:w-3 bg-[#c75c72] rounded-full"></div>
@@ -48,7 +48,6 @@ export const DoughnutChart = ({
             </span>
           </div>
 
-          {/* In Progress legend */}
           <div className="flex items-center justify-between p-2.5 sm:p-3 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
             <div className="flex items-center gap-2 sm:gap-3">
               <div className="h-2.5 w-2.5 sm:h-3 sm:w-3 bg-[#4D81E7] rounded-full"></div>
@@ -61,7 +60,6 @@ export const DoughnutChart = ({
             </span>
           </div>
 
-          {/* Done legend */}
           <div className="flex items-center justify-between p-2.5 sm:p-3 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
             <div className="flex items-center gap-2 sm:gap-3">
               <div className="h-2.5 w-2.5 sm:h-3 sm:w-3 bg-[#31B099] rounded-full"></div>

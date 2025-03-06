@@ -1,12 +1,10 @@
 import { useTaskStore } from "@/store/useTaskStore";
 import { useCallback, useEffect } from "react";
-import { Button } from "@/components/ui/button";
 import {
   BriefcaseBusiness,
   CircleDashed,
   ListChecks,
   ListPlus,
-  Upload,
 } from "lucide-react";
 import { StatCard } from "@/components/Dashboard/StatCard";
 import { DoughnutChart } from "@/components/Dashboard/Chart";

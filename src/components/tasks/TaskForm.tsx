@@ -40,7 +40,7 @@ const formSchema = z.object({
     },
     { message: "The date must be a valid future date." }
   ),
-  dependencies: z.array(z.string()),
+  dependencies: z.array(z.string()).default([]),
 });
 
 type FormTask = Omit<Task, "id" | "createdAt" | "order">;
@@ -93,6 +93,7 @@ export const TaskForm = ({ task }: TaskFormProps) => {
   };
 
   const onSubmit = (data: FormTask) => {
+    setOpen(false);
     try {
       if (isEditing && task) {
         updateTask(task.id, { ...data, dependencies: selectedDependencies });
@@ -112,7 +113,7 @@ export const TaskForm = ({ task }: TaskFormProps) => {
           </div>
         );
       }
-      setOpen(false);
+      
     } catch (error) {
       console.error("Submission failed:", error);
     }
@@ -123,7 +124,7 @@ export const TaskForm = ({ task }: TaskFormProps) => {
   };
 
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
+    <Dialog open={open} onOpenChange={setOpen} aria-describedby={undefined}>
       <DialogTrigger asChild>
         <Button
           className="flex flex-row rounded shadow bg-primary cursor-pointer hover:shadow-xl transition-all hover:translate-0.5"
@@ -147,7 +148,6 @@ export const TaskForm = ({ task }: TaskFormProps) => {
           </DialogTitle>
           <Separator className="dark:bg-gray-700" />
         </DialogHeader>
-
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           <div className="p-3">
             <Label className="my-3 text-sm text-[#161618] dark:text-white font-light" htmlFor="title">

@@ -106,7 +106,6 @@ export const ImportExportControls = () => {
     } finally {
       setImporting(false);
       setProgress(100);
-      // Reset the file input
       event.target.value = '';
     }
   };

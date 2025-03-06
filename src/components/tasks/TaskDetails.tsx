@@ -47,7 +47,7 @@ export const TaskDetails = ({ task, handleDelete }: TaskDetailsProps) => {
   }
 
   return (
-    <Dialog>
+    <Dialog aria-describedby={undefined}>
       <DialogTrigger asChild>
         <div className="flex flex-row items-center cursor-pointer hover:underline mt-1">
           <p className="text-xs text-gray-400 mx-2">View Task Details</p>

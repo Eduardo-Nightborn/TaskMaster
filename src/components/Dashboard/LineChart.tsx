@@ -31,7 +31,7 @@ export const LineChartCustom = () => {
   const [isDark, setIsDark] = useState(false);
 
   useEffect(() => {
-    // Initial check
+
     setIsDark(document.documentElement.classList.contains('dark'));
 
     // Create observer to watch for class changes
